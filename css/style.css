@@ -36,6 +36,12 @@
   padding: 0;
 }
 
+.clearfix {
+  display: table;
+  clear: both;
+  content: "";
+}
+
 .container {
   width: ;
   margin: 0 auto;
