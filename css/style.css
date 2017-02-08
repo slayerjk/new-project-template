@@ -41,14 +41,18 @@ a {
   color: #000000;
 }
 
-ul {
-  list-style: none;
+body {
+  font-size: 0.625em;
 }
 
 img,
 video,
 audio {
   max-width: 100%;
+}
+
+ul {
+  list-style: none;
 }
 
 .clearfix {
