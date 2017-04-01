@@ -41,6 +41,10 @@ audio {
   max-width: 100%;
 }
 
+input {
+  box-sizing: border-box;
+}
+
 ul {
   list-style: none;
 }
