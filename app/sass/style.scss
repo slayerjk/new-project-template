@@ -20,7 +20,6 @@
 */
 
 /* Common styles */
-
 * {
   margin: 0;
   padding: 0;
@@ -39,10 +38,6 @@ img,
 video,
 audio {
   max-width: 100%;
-}
-
-input {
-  box-sizing: border-box;
 }
 
 ul {
@@ -64,6 +59,7 @@ ul {
   display: none;
 }
 
+/*---------------------------------------------*/
 /* Media-queries-desktops/tablets */
 /* Large Devices, Wide Screens */
 @media only screen and (max-width : 1200px) {
