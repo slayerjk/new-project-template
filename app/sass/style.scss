@@ -9,7 +9,6 @@
 	font-weight: normal;
 }
 */
-
 /*
 *::-webkit-input-placeholder,
 *:-moz-placeholder,
@@ -18,46 +17,39 @@
 
 }
 */
-
 /* Common styles */
 * {
   margin: 0;
-  padding: 0;
-}
+  padding: 0; }
 
 a {
   text-decoration: none;
-  color: #000000;
-}
+  color: #000000; }
 
 body {
-  font-size: 0.625em;
-}
+  font-size: 0.625em; }
 
 img,
 video,
 audio {
-  max-width: 100%;
-}
+  width: 100%;
+  max-width: 100%; }
 
 ul {
-  list-style: none;
-}
+  list-style: none; }
 
 .clearfix {
   display: table;
   clear: both;
-  content: "";
-}
+  content: ""; }
 
 .container {
-  /*width: ;*/
-  margin: 0 auto;
-}
+  width: 100%;
+  /*max-width: ;*/
+  margin: 0 auto; }
 
 .hidden {
-  display: none;
-}
+  display: none; }
 
 /*---------------------------------------------*/
 /* Media-queries-desktops/tablets */
