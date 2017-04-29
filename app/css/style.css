@@ -36,6 +36,11 @@ audio {
   height: auto
 }
 
+input {
+  border: none;
+  outline: none;
+}
+
 ul {
   list-style: none; }
 
