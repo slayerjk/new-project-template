@@ -1,3 +1,5 @@
+@import "sass-custom-lib.sccs";
+
 /*
 @font-face {
 	font-family: "";
@@ -39,6 +41,10 @@ audio {
 input {
   border: none;
   outline: none;
+}
+
+input[type="submit"] {
+  cursor: pointer;
 }
 
 ul {
