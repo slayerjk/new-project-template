@@ -1,5 +1,6 @@
 /*global $, jQuery*/
 
+
 $(document).ready(function () {
   'use strict';
 
@@ -15,3 +16,17 @@ $(document).ready(function () {
 
 
 });
+
+/*_____etc hints_____*/
+/*jQuery Datepicker(datepicker-ru.js - is needed from jQueryUI i18n dir)*/
+/*
+  $.datepicker.setDefaults($.datepicker.regional[""]);
+  $.datepicker.setDefaults($.datepicker.regional["ru"]);
+
+  $(function () {
+    $('.input_dater').datepicker({
+      dateFormat: 'dd MM yy',
+      minDate: new Date()
+    });
+  });
+*/
