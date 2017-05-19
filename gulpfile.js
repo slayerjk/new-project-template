@@ -9,12 +9,11 @@ var gulp      = require('gulp'), // Подключаем Gulp
     autoprefixer = require('gulp-autoprefixer');// Подключаем библиотеку для автоматического добавления префиксов
 
 gulp.task('sass', function(){ // Создаем таск Sass
-    return gulp.src('app/sass/**/*.+(scss|sass)') // Берем источник
+    return gulp.src('app/sass/*.+(scss|sass)') // Берем источник
         .pipe(sass()) // Преобразуем Sass в CSS посредством gulp-sass
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // Создаем префиксы
         .pipe(gulp.dest('app/css')) // Выгружаем результата в папку app/css
 });
-
 
 gulp.task('script-min', function() {
     return gulp.src('app/js/script.js') //script.js in app/js
@@ -22,7 +21,6 @@ gulp.task('script-min', function() {
         .pipe(uglify()) // Сжимаем JS файл
         .pipe(gulp.dest('app/js')); // Выгружаем в папку app/js
 });
-
 
 gulp.task('css-build', function() {
     return gulp.src('app/css/*.css') //All *.css in app/css
@@ -32,7 +30,7 @@ gulp.task('css-build', function() {
         .pipe(gulp.dest('app/css')); // Выгружаем в папку app/css
 });
 
-  gulp.task('watch', ['sass'], function() {
+gulp.task('watch', ['sass'], function() {
     gulp.watch('app/sass/**/*.+(scss|sass)', ['sass']); // Наблюдение за sass файлами
     // Наблюдение за другими типами файлов
 });
@@ -57,7 +55,7 @@ gulp.task('build', ['clean', 'sass', 'script-min', 'css-build'], function() {
     var buildJs = gulp.src('app/libs/*.js') // Переносим скрипты в продакшен
     .pipe(gulp.dest('prod/libs'))
 
-    var buildJs = gulp.src('app/js/script.min.js') // Переносим скрипты в продакшен
+    var buildJs = gulp.src('app/js/script.min.js') // Переносим основной скрипт проекта в продакшен
     .pipe(gulp.dest('prod/js'))
 
     var buildHtml = gulp.src('app/*.html') // Переносим HTML в продакшен
