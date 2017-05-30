@@ -1,9 +1,9 @@
-@import 'helpers/fonts';
 @import 'helpers/variables';
-@import 'helpers/placeholders';
 @import 'helpers/mixins';
-@import 'helpers/common-styles';
 
-body {
-  background: red;
-}
+@import 'helpers/common-styles.scss';
+@import 'helpers/fonts.scss';
+@import 'blocks/page-header.scss';
+@import 'blocks/main-nav.scss';
+@import 'blocks/page-footer.scss';
+
