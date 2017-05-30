@@ -1,6 +1,7 @@
-var gulp      = require('gulp'), // Подключаем Gulp
+var gulp        = require('gulp'), // Подключаем Gulp
     sass        = require('gulp-sass'), //Подключаем Sass пакет,
     concat      = require('gulp-concat'), // Подключаем gulp-concat (для конкатенации файлов)
+    plumber     = require("gulp-plumber"),
     uglify      = require('gulp-uglifyjs'), // Подключаем gulp-uglifyjs (для сжатия JS)
     cssnano     = require('gulp-cssnano'), // Подключаем пакет для минификации CSS
     rename      = require('gulp-rename'), // Подключаем библиотеку для переименования файлов
@@ -10,6 +11,7 @@ var gulp      = require('gulp'), // Подключаем Gulp
 
 gulp.task('sass', function(){ // Создаем таск Sass
     return gulp.src('app/sass/*.+(scss|sass)') // Берем источник
+        .pipe(plumber())
         .pipe(sass()) // Преобразуем Sass в CSS посредством gulp-sass
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // Создаем префиксы
         .pipe(gulp.dest('app/css')) // Выгружаем результата в папку app/css
