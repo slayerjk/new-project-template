@@ -1,3 +1,8 @@
+@import 'helper/variables';
+@import 'helper/placeholders';
+@import 'helper/mixins';
+@import 'helper/fonts';
+
 /*
 @font-face {
 	font-family: "";
@@ -32,6 +37,7 @@ body {
 img,
 video,
 audio {
+  display: block;
   max-width: 100%;
   height: auto
 }
@@ -64,8 +70,27 @@ ul {
 /*---------------------------------------------*/
 /* Media-queries-desktops/tablets */
 /* Large Devices, Wide Screens */
+@media only screen and (max-width : 1200px) {
+
+}
+
 /* Medium Devices, Desktops */
+@media only screen and (max-width : 992px) {
+
+}
+
 /* Small Devices, Tablets */
+@media only screen and (max-width : 768px) {
+
+}
+
 /* Media-queries-desktops/smartphones */
 /* Extra Small Devices, Phones */
+@media only screen and (max-width : 480px) {
+
+}
+
 /* Custom, iPhone Retina */
+@media only screen and (max-width : 320px) {
+
+}
