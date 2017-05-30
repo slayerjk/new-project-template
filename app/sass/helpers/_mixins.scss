@@ -13,6 +13,6 @@
 }
 
 @mixin pseudo() {
-  position: absolute;
   content: "";
+  position: absolute;
 }
