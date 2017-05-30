@@ -1,5 +1,9 @@
-@import 'common-styles';
-@import 'helper/variables';
-@import 'helper/placeholders';
-@import 'helper/mixins';
-@import 'helper/fonts';
+@import 'helpers/fonts';
+@import 'helpers/variables';
+@import 'helpers/placeholders';
+@import 'helpers/mixins';
+@import 'helpers/common-styles';
+
+body {
+  background: red;
+}

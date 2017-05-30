@@ -1,12 +1,3 @@
-/*
-*::-webkit-input-placeholder,
-*:-moz-placeholder,
-*::-moz-placeholder,
-*:-ms-input-placeholder {
-
-}
-*/
-/* Common styles */
 * {
   margin: 0;
   padding: 0; }
@@ -38,43 +29,43 @@ input[type="submit"] {
 ul {
   list-style: none; }
 
-.clearfix {
-  display: table;
-  clear: both;
-  content: ""; }
-
 .container {
   width: 100%;
   /*max-width: ;*/
   margin: 0 auto; }
 
-.hidden {
-  display: none; }
+/*
+*::-webkit-input-placeholder,
+*:-moz-placeholder,
+*::-moz-placeholder,
+*:-ms-input-placeholder {
 
-/*---------------------------------------------*/
-/* Media-queries-desktops/tablets */
-/* Large Devices, Wide Screens */
+}
+
+// Media-queries-desktops/tablets
+//Large Devices, Wide Screens
 @media only screen and (max-width : 1200px) {
 
 }
 
-/* Medium Devices, Desktops */
+// Medium Devices, Desktops
 @media only screen and (max-width : 992px) {
 
 }
 
-/* Small Devices, Tablets */
+// Small Devices, Tablets
 @media only screen and (max-width : 768px) {
 
 }
 
-/* Media-queries-desktops/smartphones */
-/* Extra Small Devices, Phones */
+// Media-queries-desktops/smartphones
+// Extra Small Devices, Phones
 @media only screen and (max-width : 480px) {
 
 }
 
-/* Custom, iPhone Retina */
+// Custom, iPhone Retina
 @media only screen and (max-width : 320px) {
 
 }
+*/
