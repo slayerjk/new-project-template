@@ -7,7 +7,8 @@ var gulp        = require('gulp'), // Подключаем Gulp
     rename      = require('gulp-rename'), // Подключаем библиотеку для переименования файлов
     del         = require('del'), // Подключаем библиотеку для удаления файлов и папок
     cache       = require('gulp-cache'), // Подключаем библиотеку кеширования
-    autoprefixer = require('gulp-autoprefixer');// Подключаем библиотеку для автоматического добавления префиксов
+    autoprefixer = require('gulp-autoprefixer'),// Подключаем библиотеку для автоматического добавления префиксов
+    server = require("browser-sync").create();//browser autorefresh
 
 gulp.task('sass', function(){ // Создаем таск Sass
     return gulp.src('app/sass/style.scss') // Берем источник
@@ -15,7 +16,17 @@ gulp.task('sass', function(){ // Создаем таск Sass
         .pipe(sass()) // Преобразуем Sass в CSS посредством gulp-sass
         .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // Создаем префиксы
         .pipe(gulp.dest('app/css')) // Выгружаем результата в папку app/css
+        .pipe(server.stream());
 });
+
+gulp.task('server', ['sass'], function() {
+  server.init({
+    server: ".",
+    notify: false,
+    open: true,
+    cors: true,
+    ui: false
+  });
 
 gulp.task('script-min', function() {
     return gulp.src('app/js/script.js') //script.js in app/js
@@ -24,9 +35,8 @@ gulp.task('script-min', function() {
         .pipe(gulp.dest('app/js')); // Выгружаем в папку app/js
 });
 
-gulp.task('css-build', function() {
-    return gulp.src('app/css/*.css') //All *.css in app/css
-        .pipe(concat('main.css')) // Собираем их в кучу в новом файле main.css
+gulp.task('css-min', function() {
+    return gulp.src('app/css/style.css') //style.css in app/css
         .pipe(cssnano()) // Сжимаем
         .pipe(rename({suffix: '.min'})) // Добавляем суффикс .min
         .pipe(gulp.dest('app/css')); // Выгружаем в папку app/css
@@ -41,8 +51,8 @@ gulp.task('clean', function() {
     return del.sync('prod'); // Удаляем папку dist перед сборкой
 });
 
-gulp.task('build', ['clean', 'sass', 'script-min', 'css-build'], function() {
-    var buildCss = gulp.src('app/css/main.min.css')
+gulp.task('build', ['clean', 'sass', 'script-min', 'css-min'], function() {
+    var buildCss = gulp.src('app/css/style.min.css')
     .pipe(gulp.dest('prod/css'))
 
     var buildCss = gulp.src('app/libs/*.css')
