@@ -1,8 +1,9 @@
 @import 'helpers/variables';
 @import 'helpers/mixins';
 
-@import 'common-styles.scss';
-@import 'fonts.scss';
+@import 'global/common-styles.scss';
+@import 'global/fonts.scss';
+
 @import 'blocks/page-header.scss';
 @import 'blocks/main-nav.scss';
 @import 'blocks/page-footer.scss';
