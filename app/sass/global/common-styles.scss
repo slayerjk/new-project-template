@@ -10,9 +10,11 @@ a {
 body {
   font-size: 0.625em; }
 
+audio,
 img,
+svg,
 video,
-audio {
+ {
   display: block;
   max-width: 100%;
   height: auto
