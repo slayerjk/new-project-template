@@ -1,25 +1,30 @@
 {
-  "name": "htmalacademy-sedona",
+  "name": "my-new-project",
   "version": "1.0.0",
   "private": true,
-  "description": "new-project template",
+  "description": "new-project framework",
   "main": "index.html",
   "dependencies": {},
   "devDependencies": {
-    "del": "^2.2.2",
-    "gulp": "^3.9.1",
+    "@htmlacademy/editorconfig-cli": "1.x",
     "autoprefixer": "6.7.x",
     "browser-sync": "2.18.12",
+    "css-mqpacker": "^6.0.1",
+    "del": "^2.2.2",
+    "gulp": "^3.9.1",
     "gulp-cache": "^0.4.6",
     "gulp-concat": "^2.6.1",
-    "gulp-cssnano": "^2.1.2",
+    "gulp-csso": "^3.0.0",
+    "gulp-plumber": "1.1.0",
     "gulp-rename": "^1.2.2",
+    "run-sequence": "^1.2.2",
     "gulp-sass": "^3.1.0",
-    "gulp-uglifyjs": "^0.6.2",
-    "@htmlacademy/editorconfig-cli": "1.x"
+    "gulp-svgmin": "^1.2.4",
+    "gulp-svgstore": "^6.1.0",
+    "gulp-uglifyjs": "^0.6.2"
   },
   "scripts": {
-    "test": "editorconfig-cli",
+    "test": "editorconfig-cli"
   },
   "editorconfig-cli": [
     "*.html",
@@ -31,7 +36,7 @@
   ],
   "engines": {
     "node": "6.10"
-  }
-  "author": "",
+  },
+  "author": "MMV",
   "license": "ISC"
 }
