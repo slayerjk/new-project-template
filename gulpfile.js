@@ -1,7 +1,7 @@
 "use strict";
 
 var gulp         = require('gulp'), // Подключаем Gulp
-    autoprefixer = require('gulp-autoprefixer'),// Подключаем библиотеку для автоматического добавления префиксов
+    autoprefixer = require("autoprefixer"),// Подключаем библиотеку для автоматического добавления префиксов
     cache        = require('gulp-cache'), // Подключаем библиотеку кеширования
     concat       = require('gulp-concat'), // Подключаем gulp-concat (для конкатенации файлов)
     del          = require('del'), // Подключаем библиотеку для удаления файлов и папок
@@ -9,6 +9,7 @@ var gulp         = require('gulp'), // Подключаем Gulp
     minifycss    = require('gulp-csso'), // Подключаем пакет для минификации CSS
     mqpacker     = require('css-mqpacker'), // Оптимизирует media-выражения
     plumber      = require('gulp-plumber'), // Не позволяет звершать работу gulp при ошибке
+    postcss      = require("gulp-postcss"),// Нужен для autoprefixer и mqpacker
     rename       = require('gulp-rename'), // Подключаем библиотеку для переименования файлов
     run          = require('run-sequence'), // Для задания очереди исполнения тасков
     sass         = require('gulp-sass'), //Подключаем Sass пакет,
@@ -21,8 +22,17 @@ gulp.task('sass', function() { // Создаем таск Sass
     return gulp.src('app/sass/style.scss') // Берем источник
         .pipe(plumber())
         .pipe(sass()) // Преобразуем Sass в CSS посредством gulp-sass
-        .pipe(autoprefixer(['last 15 versions', '> 1%', 'ie 8', 'ie 7'], { cascade: true })) // Создаем префиксы
-        .pipe(gulp.dest('app/css')) // Выгружаем результата в папку app/css
+        .pipe(postcss([
+          autoprefixer({browsers: [
+            "last 2 versions"
+          ]}),
+          mqpacker({
+            sort: true
+          })
+        ]))
+        .pipe(minifycss()) // Сжимаем
+        .pipe(rename({suffix: '.min'})) // Добавляем суффикс .min
+        .pipe(gulp.dest('app/css')) // Выгружаем результат в папку app/css
         .pipe(server.stream());
 });
 
@@ -53,12 +63,13 @@ gulp.task('script-min', function() {
         .pipe(gulp.dest('app/js')); // Выгружаем в папку app/js
 });
 
-gulp.task('css-min', function() {
-    return gulp.src('app/css/style.css') //style.css in app/css
-        .pipe(mqpacker({sort: true})) //Оптимизация(сортировка) медиа-выражений
-        .pipe(minifycss()) // Сжимаем
-        .pipe(rename({suffix: '.min'})) // Добавляем суффикс .min
-        .pipe(gulp.dest('app/css')); // Выгружаем в папку app/css
+gulp.task('images', function() {
+  return gulp.src('img/**/*.{png,jpg,gif}')
+    .pipe(imagemin([
+      imagemin.optipng({optimizationLevel: 3}),//1-max.; 3-safe; 10-no compress.
+      imagemin.jpegtran({progressive: true})
+    ]))
+    .pipe(gulp.dest('img'));
 });
 
 gulp.task('symbols', function() {
@@ -68,7 +79,7 @@ gulp.task('symbols', function() {
       inlineSvg: true
     }))
     .pipe(rename('symbols.svg'))
-    .pipe(gulp.dest('build/img'));
+    .pipe(gulp.dest('app/img'));
 });
 
 gulp.task('watch', ['sass'], function() {
@@ -85,24 +96,20 @@ gulp.task('clean', function() {
     return del.sync('build'); // Удаляем папку сборки проекта build перед следующей сборкой
 });
 
-gulp.task('build', ['clean', 'sass', 'script-min', 'css-min', 'symbols'], function() {
+gulp.task('build', ['clean', 'sass', 'script-min', 'images', 'symbols'], function() {
     var buildCss = gulp.src('app/css/style.min.css')
     .pipe(gulp.dest('build/css'))
 
-    var buildCss = gulp.src('app/libs/*.css')
+    var buildCss = gulp.src('app/libs/*.css') //Перенос подключаемых js библиотек
     .pipe(gulp.dest('build/libs'))
 
     var buildFonts = gulp.src('app/fonts/**/*.{woff,woff2}*') // Переносим шрифты в продакшен
     .pipe(gulp.dest('build/fonts'))
 
-    var buildImg = gulp.src("app/img/**/*.{png,jpg,gif}") // Переносим картинки в продакшен
-    .pipe(imagemin([
-    imagemin.optipng({optimizationLevel: 3}),//1-max.; 3-safe; 10-no compress.
-    //imagemin.jpegtran({progressive: true})
-    ]))
-    .pipe(gulp.dest("build/img"));
+    var buildImg = gulp.src('app/img/**/*') // Переносим картинки в продакшен
+    .pipe(gulp.dest("build/img/"));
 
-    var buildLibs = gulp.src('app/libs/*.js') // Переносим скрипты в продакшен
+    var buildLibs = gulp.src('app/libs/*.js') // Переносим библиотеки в продакшен
     .pipe(gulp.dest('build/libs'))
 
     var buildJs = gulp.src('app/js/script.min.js') // Переносим основной скрипт проекта в продакшен
