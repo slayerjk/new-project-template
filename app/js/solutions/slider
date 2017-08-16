@@ -1,0 +1,17 @@
+/*Slider behaviour*/
+  $.fn.sliderSwitcher = function () {
+    var
+      $currentInput = $('.slider__input:checked'),
+      $nextInput = $currentInput.next(),
+      $firstInput = $('.slider__input').first();
+    $currentInput.removeAttr('checked');
+    if ($nextInput.prop('type') === 'radio') {
+      $nextInput.prop('checked', 'checked');
+    } else {
+      $nextInput = $firstInput.prop('checked', 'checked');
+    }
+  };
+
+/*Slider auto-switching interval*/
+  setInterval($.fn.sliderSwitcher, 4000);
+});

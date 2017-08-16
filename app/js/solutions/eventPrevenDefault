@@ -1,0 +1,12 @@
+/*event.preventDefault() gor IE9(event.returnValue = false)*/
+  $.fn.eventPreventDefaultSafe = function (event) {
+    if (event.preventDefault) {
+      event.preventDefault();
+    } else {
+      event.returnValue = false;
+    }
+  };
+/* For FF must use
+function (event) {
+  event.preventDefault();
+*/
