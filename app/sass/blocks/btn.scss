@@ -1,8 +1,10 @@
 .btn {
-  color: rgba(255, 255, 255, 0.9);
   text-align: center;
   text-transform: none;
-  background-color: grey;
+  color: #fff;
+  background-color: #2aab6d;
+  border: none;
+  outline: none;
   cursor: pointer;
   &:hover {
     color: rgba(255, 255, 255, 1);
