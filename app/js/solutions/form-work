@@ -1,0 +1,32 @@
+/*Form(contest) behaviour*/
+  $('.modal-window__btn').on('click', function (e) {
+    $('.overlay').fadeOut('slow');
+    $('.modal-window').fadeOut('fast');
+  });
+
+  function checkInput() {
+    $('.form').find('.contest__input--required-js').each(function () {
+      if ($(this).val() === '') {
+        $(this).addClass('form__input--error-js');
+      } else if ($(this).val() !== '') {
+        $(this).removeClass('form__input--error-js');
+      }
+    });
+  }
+
+  $('.form__form-submit').on('click', function (event) {
+    event.preventDefault(event);
+    $('.overlay').show();
+    checkInput();
+    if ($('.form__input--error-js').length > 0) {
+      $('.form__form-submit').removeClass('error-state');
+      $('.form__form-submit').addClass('error-state');
+      $('.modal-window--error-window').fadeIn();
+    } else if ($('.contest__input--error-js').length === 0) {
+      $('.form__form-submit').removeClass('error-state');
+      $('.modal-window--success-window').fadeIn();
+      $('.modal-window__btn').on('click', function () {
+        $('.form').submit();
+      });
+    }
+  });

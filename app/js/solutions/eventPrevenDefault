@@ -8,5 +8,5 @@
   };
 /* For FF must use
 function (event) {
-  event.preventDefault();
+  event.preventDefault(event);
 */
