@@ -1,32 +1,54 @@
-/*Form(contest) behaviour*/
-  $('.modal-window__btn').on('click', function (e) {
-    $('.overlay').fadeOut('slow');
-    $('.modal-window').fadeOut('fast');
-  });
+/*Main-nav mobile-menu toggle*/
 
-  function checkInput() {
-    $('.form').find('.contest__input--required-js').each(function () {
-      if ($(this).val() === '') {
-        $(this).addClass('form__input--error-js');
-      } else if ($(this).val() !== '') {
-        $(this).removeClass('form__input--error-js');
-      }
-    });
+  /*---Functions to change nav-menu styles(logo-section mostly)---*/
+  function navMenuMobile() {
+    $('.main-nav__logo').addClass('main-nav__logo--js-mobile');
+    $('.main-nav__menu-toggle').show();
+    $('.main-nav__list').hide();
   }
 
-  $('.form__form-submit').on('click', function (event) {
+  function navMenuWide() {
+    $('.main-nav__logo').removeClass('main-nav__logo--js-mobile');
+    $('.main-nav__menu-toggle').hide();
+    $('.main-nav__list').show();
+  }
+
+  /*---Function to change nav-menu styles depending viewport---*/
+  function navMenuState() {
+    var $winsize = $(window).width();
+    if ($winsize <= 768) {
+      navMenuMobile();
+    } else if ($winsize > 768) {
+      navMenuWide();
+    }
+  }
+
+  /*---Toggle-nav-menu btn(burger) behaviour on click---*/
+  $('.main-nav__menu-toggle').on('click', function (event) {
     event.preventDefault(event);
-    $('.overlay').show();
-    checkInput();
-    if ($('.form__input--error-js').length > 0) {
-      $('.form__form-submit').removeClass('error-state');
-      $('.form__form-submit').addClass('error-state');
-      $('.modal-window--error-window').fadeIn();
-    } else if ($('.contest__input--error-js').length === 0) {
-      $('.form__form-submit').removeClass('error-state');
-      $('.modal-window--success-window').fadeIn();
-      $('.modal-window__btn').on('click', function () {
-        $('.form').submit();
-      });
+    $('.main-nav__list').slideToggle('slow');
+
+    if ($('.main-nav__menu-toggle').hasClass('main-nav__menu-toggle--active')) {
+      $('.main-nav__menu-toggle').removeClass('main-nav__menu-toggle--active');
+      setTimeout(function () {
+        $('.main-nav__logo').addClass('main-nav__logo--js-mobile');
+      }, 470);
+    } else {
+      $('.main-nav__menu-toggle').addClass('main-nav__menu-toggle--active');
+      $('.main-nav__logo').removeClass('main-nav__logo--js-mobile');
     }
   });
+
+  /*---Nav-menu view(mobile or widescreen function on window resizing---*/
+  $(window).on('resize', function () {
+    var $winsize = $(window).width();
+    $('.main-nav__menu-toggle').removeClass('main-nav__menu-toggle--active');
+    if ($winsize <= 768) {
+      navMenuMobile();
+    } else if ($winsize > 768) {
+      navMenuWide();
+    }
+  });
+
+  /*---Calling Function to change nav-menu styles depending viewport---*/
+  navMenuState();
