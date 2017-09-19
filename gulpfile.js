@@ -41,6 +41,11 @@ gulp.task('html-update', function() {
     .pipe(server.stream());
 });
 
+gulp.task('php-update', function() {
+  return gulp.src('app/*.php') // Берем источник
+    .pipe(server.stream());
+});
+
 gulp.task('script-update', function() {
   return gulp.src('app/js/script.js') // Берем источник
     .pipe(server.stream());
@@ -85,6 +90,7 @@ gulp.task('symbols', function() {
 gulp.task('watch', ['sass'], function() {
     gulp.watch('app/sass/**/*.+(scss|sass)', ['sass']); // Наблюдение за sass файлами
     gulp.watch('app/*.html', ['html-update']);
+    gulp.watch('app/*.php', ['php-update']);
     gulp.watch('app/js/script.js', ['script-update']);
     // Наблюдение за другими типами файлов
     server.init({
@@ -116,6 +122,9 @@ gulp.task('build', ['clean', 'sass', 'script-min', 'images', 'symbols'], functio
     .pipe(gulp.dest('build/js'))
 
     var buildHtml = gulp.src('app/*.html') // Переносим HTML в продакшен
+    .pipe(gulp.dest('build'));
+
+    var buildPhp = gulp.src('app/*.php') // Переносим PHP в продакшен
     .pipe(gulp.dest('build'));
 });
 
