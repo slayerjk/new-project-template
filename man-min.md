@@ -11,3 +11,4 @@ To install all node modules:
           $ bower install <package>//https://bower.io/search/
 4.npm init/npm -i//in project dir;
 5.npm install//install all modules in "package.json"(if it exists).
+6.for correct work with php - register domen in OS(tab- "domens").
