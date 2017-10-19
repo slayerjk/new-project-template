@@ -15,3 +15,26 @@
 /*Slider auto-switching interval*/
   setInterval($.fn.sliderSwitcher, 4000);
 });
+
+/*Left-right switches*/
+  var $currentInput = $('.reviews__slider-input:checked');
+  $('.reviews__js-slider-arrow-switch-4-desktop--left').on('click', function () {
+    $currentInput.removeAttr('checked').removeProp('checked');
+    if ($currentInput.hasClass('js-switch1')) {
+      $currentInput = $('.js-switch3').prop('checked', 'checked');
+    } else if ($currentInput.hasClass('js-switch2')) {
+      $currentInput = $('.js-switch1').prop('checked', 'checked');
+    } else if ($currentInput.hasClass('js-switch3')) {
+      $currentInput = $('.js-switch2').prop('checked', 'checked');
+    }
+  });
+  $('.reviews__js-slider-arrow-switch-4-desktop--right').on('click', function () {
+    $currentInput.removeAttr('checked').removeProp('checked');
+    if ($currentInput.hasClass('js-switch1')) {
+      $currentInput = $('.js-switch2').prop('checked', 'checked');
+    } else if ($currentInput.hasClass('js-switch2')) {
+      $currentInput = $('.js-switch3').prop('checked', 'checked');
+    } else if ($currentInput.hasClass('js-switch3')) {
+      $currentInput = $('.js-switch1').prop('checked', 'checked');
+    }
+  });

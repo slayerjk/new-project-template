@@ -17,6 +17,7 @@ var gulp         = require('gulp'), // Подключаем Gulp
     browserSync  = require('browser-sync'),//browser autorefresh
     svgstore     = require('gulp-svgstore'), // Создание svg слайдов
     svgmin       = require('gulp-svgmin'), // Минификация svg слайдов
+    uncss        = require('gulp-uncss'), // Удаление неиспользуемого CSS-кода
     uglify       = require('gulp-uglifyjs'); // Подключаем gulp-uglifyjs (для сжатия JS)
 
 //Paths variables//////////////////////////////////////////////////////////////
@@ -80,6 +81,7 @@ gulp.task('sass', function() { // Создаем таск Sass
         sort: true
       })
     ]))
+    .pipe(uncss({html: [paths.html]}))
     .pipe(minifycss()) // Сжимаем
     .pipe(rename({suffix: '.min'})) // Добавляем суффикс .min
     .pipe(gulp.dest(paths.cssDir)) // Выгружаем результат в папку app/css
