@@ -1,7 +1,7 @@
 To install all node modules:
 1.install nodejs(for npm);
 2.npm i -g gulp-cli//Gulp global install;
-2.install git//for bower;
+2.install git//for bower; "git config --global credential.helper wincred" = for use git without password prompt on local machine.;
 3.npm i -g bower//install bower global(for libs);
       3.1 "bowerrc" file in project root:
           {
