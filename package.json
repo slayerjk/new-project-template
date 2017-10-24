@@ -23,6 +23,7 @@
     "gulp-svgmin": "^1.2.4",
     "gulp-svgstore": "^6.1.0",
     "gulp-uglifyjs": "^0.6.2",
+    "gulp-connect-php": "^1.0.1",
     "gulp-uncss": "^1.0.6",
     "run-sequence": "^1.2.2"
   },
