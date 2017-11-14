@@ -46,7 +46,7 @@ var paths = {
 //browserSync options//////////////////////////////////////////////////////////
 gulp.task('browserSync', function () {
   browserSync({
-    proxy: 'test.devp//' //current site name(domain in OS, ex.)
+    proxy: 'test.devp/app' //current site name(domain in OS, ex.)
   });
 });
 
@@ -55,7 +55,7 @@ gulp.task('php-server', function () {
     connectPHP.server({
         base: './',
         keepalive: true,
-        hostname: 'test.devp//', //current site name(domain in OS, ex.)
+        hostname: '/', //current site name(domain in OS, ex.)
         open: false,
         notify: false,
         ui: false //turn off browserSync ui page
