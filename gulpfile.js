@@ -17,7 +17,7 @@ var gulp         = require('gulp'), // Подключаем Gulp
     browserSync  = require('browser-sync'),//browser autorefresh
     svgstore     = require('gulp-svgstore'), // Создание svg слайдов
     svgmin       = require('gulp-svgmin'), // Минификация svg слайдов
-    //uncss        = require('gulp-uncss'), // Удаление неиспользуемого CSS-кода
+    uncss        = require('gulp-uncss'), // Удаление неиспользуемого CSS-кода
     uglify       = require('gulp-uglifyjs'); // Подключаем gulp-uglifyjs (для сжатия JS)
 
 //Paths variables//////////////////////////////////////////////////////////////
@@ -43,29 +43,46 @@ var paths = {
     buildJs: 'build/js'
 };
 
-//browserSync options//////////////////////////////////////////////////////////
-gulp.task('browserSync', function () {
-  browserSync({
-    proxy: 'test.devp/app' //current site name(domain in OS, ex.)
-  });
+//browserSync without php-support section//////////////////////////////////////
+/*
+gulp.task('browserSync', ['sass'], function() {
+  browserSync.init({
+    server: './app',
+    notify: false,
+    open: true,
+    cors: true,
+    ui: false
+  })
 });
+*/
 
+//browserSync php-support section//////////////////////////////////////////////
 //browserSync options for php//////////////////////////////////////////////////
+
 gulp.task('php-server', function () {
     connectPHP.server({
         base: './',
         keepalive: true,
-        hostname: '/', //current site name(domain in OS, ex.)
         open: false,
         notify: false,
         ui: false //turn off browserSync ui page
     });
 });
 
+//browserSync options//////////////////////////////////////////////////////////
+gulp.task('browserSync', function () {
+  browserSync({
+    proxy: 'newdomen/dir', //current site name(domain in OS, ex.)
+    notify: false
+  });
+});
+
+///////////////////////////////////////////////////////////////////////////////
+
 //Php-files resfresh on change//////////////////////////////////////////////////
 gulp.task('php-update', function() {
   return gulp.src(paths.php) // Берем источник
-    .pipe(browserSync.reload({stream: true}));
+    .pipe(browserSync.stream());
 });
 
 //Sass-files manipulations/////////////////////////////////////////////////////
@@ -81,23 +98,23 @@ gulp.task('sass', function() { // Создаем таск Sass
         sort: true
       })
     ]))
-    //.pipe(uncss({html: [paths.html]}))
+    .pipe(uncss({html: [paths.html]}))
     .pipe(minifycss()) // Сжимаем
     .pipe(rename({suffix: '.min'})) // Добавляем суффикс .min
     .pipe(gulp.dest(paths.cssDir)) // Выгружаем результат в папку app/css
-    .pipe(browserSync.reload({stream: true}));
+    .pipe(browserSync.stream());
 });
 
 //Html-files refresh on change/////////////////////////////////////////////////
 gulp.task('html-update', function() {
   return gulp.src(paths.html) // Берем источник
-    .pipe(browserSync.reload({stream: true}));
+    .pipe(browserSync.stream());
 });
 
 //Script.js-file manipulation//////////////////////////////////////////////////
 gulp.task('script-update', function() {
   return gulp.src(paths.jsScript) // Берем источник
-    .pipe(server.stream());
+    .pipe(browserSync.stream());
 });
 
 //Script.js minification///////////////////////////////////////////////////////
@@ -175,5 +192,6 @@ gulp.task('clear', function () {
     return cache.clearAll();
 });
 
-//Gulp defaul on 'gulp' command////////////////////////////////////////////////
+//Gulp default on 'gulp' command///////////////////////////////////////////////
+//gulp.task('default', ['watch', 'browserSync']);
 gulp.task('default', ['watch', 'browserSync', 'php-server']);
