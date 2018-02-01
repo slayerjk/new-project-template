@@ -1,5 +1,5 @@
 {
-  "name": "HTMLAcademy-Pink",
+  "name": "Project",
   "version": "1.0.0",
   "private": true,
   "description": "new-project framework",
@@ -24,7 +24,6 @@
     "gulp-svgstore": "^6.1.0",
     "gulp-uglifyjs": "^0.6.2",
     "gulp-connect-php": "^1.0.1",
-    "gulp-uncss": "^1.0.6",
     "run-sequence": "^1.2.2"
   },
   "scripts": {

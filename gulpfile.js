@@ -17,7 +17,6 @@ var gulp         = require('gulp'), // Подключаем Gulp
     browserSync  = require('browser-sync'),//browser autorefresh
     svgstore     = require('gulp-svgstore'), // Создание svg слайдов
     svgmin       = require('gulp-svgmin'), // Минификация svg слайдов
-    uncss        = require('gulp-uncss'), // Удаление неиспользуемого CSS-кода
     uglify       = require('gulp-uglifyjs'); // Подключаем gulp-uglifyjs (для сжатия JS)
 
 //Paths variables//////////////////////////////////////////////////////////////
@@ -61,7 +60,7 @@ gulp.task('browserSync', ['sass'], function() {
 
 gulp.task('php-server', function () {
     connectPHP.server({
-        base: './',
+        base: 'localhost/test.loc/app',
         keepalive: true,
         open: false,
         notify: false,
@@ -72,7 +71,7 @@ gulp.task('php-server', function () {
 //browserSync options//////////////////////////////////////////////////////////
 gulp.task('browserSync', function () {
   browserSync({
-    proxy: 'newdomen/dir', //current site name(domain in OS, ex.)
+    proxy: 'localhost/test.loc/app', //current site name(domain in OS, ex.)
     notify: false
   });
 });
@@ -98,7 +97,6 @@ gulp.task('sass', function() { // Создаем таск Sass
         sort: true
       })
     ]))
-    .pipe(uncss({html: [paths.html]}))
     .pipe(minifycss()) // Сжимаем
     .pipe(rename({suffix: '.min'})) // Добавляем суффикс .min
     .pipe(gulp.dest(paths.cssDir)) // Выгружаем результат в папку app/css

@@ -1,0 +1,26 @@
+#Git-usage examples:#
+
+$ git config --global user.name "Marchenko Maxim" // setting user name
+$ git config --global user.email slayer.jk@mail.ru //setting user account
+$ git config --global core.autocrlf true //установка окончаний строк(?)
+$ git config --global core.safecrlf true //установка окончаний строк(?)
+$git config --global core.editor editor //установка редактора по умолч.(вместо editor - atom, brackets, notepad, etc)
+$git config --list //все настройки
+--
+$ git clone [adress] # clone/copy project to current dir
+$ git status # current status of all files in current dir(project)
+$ git pull # get all changes
+$ git add * #add ALL new files/dirs to snapdhot
+$ git commit -a -m "New comment" # add all modified(NOT new files) to snapshot and do commit to project with comment.
+$git push # add commit to project(write all changes)
+--
+$git checkout -b branch-name//создаст новую ветку и переключится на нее
+git push origin branch-name //После создания ветку можно отправить на сервер с помощью команды
+git checkout origin/branch-name -b branch-name //забрать себе на компьютер ветку с удалённого репозитория командой
+git branch -r //все существующие ветки удалённого репозитория
+git checkout branch-name //Переключиться на любую локальную ветку можно с помощью команды
+git clean -f -d //чистка от мусора
+
+!!! - в крайнем случае!!! $ git config core.safecrlf false # устранение проблемы с предупреждением об неверном переносе строк(?)
+#http://php-mysql-highload.blogspot.com/2012/08/git-fatal-lf-would-be-replaced-by-crlf.html
+Очень просто конвертировать переносы строк в Windows-формат помогает текстовый редактор Notepad++: Правка→EOL конверсия→Преобразовать в WIN-формат.#
