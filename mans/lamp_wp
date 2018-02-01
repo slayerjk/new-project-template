@@ -1,0 +1,163 @@
+﻿WordPress
+-----
+WP install [arch]linux:
+https://wiki.archlinux.org/index.php/Wordpress
+--
+https://www.digitalocean.com/community/tutorials/wordpress-lamp-ubuntu-16-04-ru
+https://www.digitalocean.com/community/tutorials/how-to-install-linux-apache-mysql-php-lamp-stack-on-ubuntu-16-04
+
+https://dominicm.com/install-php-on-arch-linux/
+https://dominicm.com/install-phpmyadmin-on-arch-linux/
+https://dominicm.com/install-mysql-mariadb-on-arch-linux/
+
+http://fos.cmb.ac.lk/blog/lamp-phpmyadmin-arch-linux-installation-guide/
+
+1.Apache
+https://wiki.archlinux.org/index.php/Apache_HTTP_Server
+https://wiki.archlinux.org/index.php/Apache_HTTP_Server_(%D0%A0%D1%83%D1%81%D1%81%D0%BA%D0%B8%D0%B9)
+# pacman -S apache #2.4.29-1
+#vi /etc/httpd/conf/httpd.conf #By default, it will serve the directory /srv/http
+
+#touch conf/extra/phpmyadmin.conf
+/etc/httpd/conf/extra/phpmyadmin.conf
+Alias /phpmyadmin "/usr/share/webapps/phpMyAdmin"
+<Directory "/usr/share/webapps/phpMyAdmin">
+DirectoryIndex index.php
+AllowOverride All
+Options FollowSymlinks
+Require all granted
+</Directory>
+
+#vim conf/extra/httpd-wordpress.conf
+/etc/httpd/conf/extra/httpd-wordpress.conf
+Alias /wordpress "/usr/share/webapps/wordpress"
+<Directory "/usr/share/webapps/wordpress">
+AllowOverride All
+Options FollowSymlinks
+Require all granted
+</Directory>
+#vim /etc/httpd/conf/httpd.conf
+ServerName server_domain_or_IP #localhost:80
+#LoadModule mpm_event_module modules/mod_mpm_event.so #Comment this line
+LoadModule mpm_prefork_module modules/mod_mpm_prefork.so #uncomment/add
+LoadModule dir_module modules/mod_dir.so #uncomment/add
+LoadModule php7_module modules/libphp7.so #uncomment/add
+User http
+Listen 80
+ServerAdmin you@example.com
+ServerName localhost:80
+...
+DocumentRoot "/srv/http"
+<Directory "/srv/http">
+<IfModule dir_module>
+DirectoryIndex index.html index.php #other .htm/xml
+</IfModule>
+<IfModule mime_module>
+...
+<IfModule mod_dir.c>
+DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm
+</IfModule>
+...
+TypesConfig conf/mime.types #uncomment
+...
+AddType application/x-httpd-php .php
+AddType application/x-httpd-php-source .phps
+AddHandler application/x-httpd-php .php
+...
+# Includes section
+# phpMyAdmin configuration
+Include conf/extra/phpmyadmin.conf
+Include conf/extra/httpd-wordpress.conf
+Include conf/extra/php7_module.conf #end of include list
+...
+#OPTIONAL
+Include conf/extra/httpd-vhosts.conf #for several vhosts
+#Enabled Vhosts: for more convinient way to add/remove
+Include conf/vhosts/domainname1.dom 
+
+# mkdir /etc/httpd/conf/vhosts
+# vim /etc/httpd/conf/vhosts/domainname1.dom
+<VirtualHost domainname1.dom:80>
+ServerAdmin webmaster@domainname1.dom
+ServerName domainname1.dom
+ServerAlias domainname1.dom
+DocumentRoot "/home/user/http/domainname1.dom"
+ErrorLog "/var/log/httpd/domainname1.dom-error_log"
+CustomLog "/var/log/httpd/domainname1.dom-access_log" common
+
+<Directory "/home/user/http/domainname1.dom">
+Require all granted
+</Directory>
+</VirtualHost>
+
+<VirtualHost domainname1.dom:443>
+ServerAdmin webmaster@domainname1.dom
+DocumentRoot "/home/user/http/domainname1.dom"
+ServerName domainname1.dom:443
+ServerAlias domainname1.dom:443
+ErrorLog "/var/log/httpd/domainname1.dom-error_log"
+CustomLog "/var/log/httpd/domainname1.dom-access_log" common
+
+<Directory "/home/user/http/domainname1.dom">
+Require all granted
+</Directory>
+
+SSLEngine on
+SSLCertificateFile "/etc/httpd/conf/server.crt"
+SSLCertificateKeyFile "/etc/httpd/conf/server.key"
+</VirtualHost>
+#vim /ets/hosts
+127.0.0.1 domainname1.dom 
+
+#systemctl status[restart,enable] httpd.service
+#apachectl configtest #check apache config
+#vim /etc/httpd/conf/extra/dir.conf
+#systemctl status[restart,enable] httpd.service
+
+#chmod -R o+x /srv/http
+
+2.PHP
+https://wiki.archlinux.org/index.php/PHP
+#pacman -S php php-apache#7.2.1-3
+#vim /etc/php/php.ini.
+date.timezone = Asia/Almaty
+display_errors = On
+open_basedir = /srv/http/:/home/:/tmp/:/usr/share/pear/:/usr/share/webapps/ #limits the paths that can be accessed by PHP
+extension=mysqli #uncomment
+open_basedir = /srv/http/:/home/:/tmp/:/usr/share/webapps/:/etc/webapps/
+--
+#Чтобы убедиться в том, что PHP настроен корректно, создайте файл test.php в каталоге DocumentRoot (то есть в /srv/http/ или ~/public_html) и поместите в него следующий код: <?php phpinfo(); ?>
+По адресу http://localhost/test.php или http://localhost/''~пользователь''/test.php вы должны увидеть информационную страницу PHP.
+2.1 phpMyAdmin
+https://wiki.archlinux.org/index.php/PhpMyAdmin
+#pacman -S phpmyadmin
+You can access your phpMyAdmin installation by going to http://localhost/phpmyadmin/
+3.MySQL
+https://wiki.archlinux.org/index.php/MySQL
+MariaDB is the default implementation of MySQL in Arch Linux, provided with the mariadb package.
+# mysql_install_db --user=mysql --basedir=/usr --datadir=/var/lib/mysql
+Now the mariadb.service can be started and/or enabled with systemd.
+The following command will interactively guide you through a number of recommended security measures at the database level:
+# mysql_secure_installation
+$ mysql -u root -p
+MariaDB> CREATE DATABASE wordpress;
+MariaDB> GRANT ALL PRIVILEGES ON wordpress.* TO "wpuser"@"localhost"; IDENTIFIED BY "choose_db_password";
+MariaDB> FLUSH PRIVILEGES;
+MariaDB> EXIT;
+
+4. WP
+#restart httpd
+4.1 WP installing
+Go to wordpress.org and download the latest version of WordPress and extract it to your webserver directory. Give the directory enough permissions to allow your FTP user to write to the directory (used by WordPress).
+cd /srv/http/whatever
+wget https://wordpress.org/latest.tar.gz
+tar xvzf latest.tar.gz
+4.2 Configuring Host
+The WordPress installation procedure will use the URL in the address field of your web browser as the default website URL. If you have navigated to http://localhost/wordpress, your website will be accessible from your local network, but it will be broken in appearance and function.
+    1. Navigate to http://hostname/wordpress. 
+    2. Click the "Create a Configuration File" button. 
+    3. Click the "Let's go!" button. 
+    4. Fill in you database information created in the previous section 
+    5. Click "Submit".
+Now would be a good time to access your website from all your devices to be sure your WordPress installation is setup correctly.
+
